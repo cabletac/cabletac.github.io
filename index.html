@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CableTac: scalable visuo-tactile learning for cable routing. Anonymous supplementary material.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>CableTac — Scalable Visuo-Tactile Learning for Cable Routing</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#overview">Skip to content</a>
+<header class="nav-wrap"><nav aria-label="Main navigation">
+  <a class="brand" href="#top">Cable<span>Tac</span><span class="brand-dot"></span></a>
+  <div class="nav-links"><a href="#environment">Environment</a><a href="#data">Data engine</a><a href="#learning">Results</a><a href="#calibration">Calibration</a></div>
+  <a class="nav-paper" href="#overview">Overview ↓</a>
+</nav></header>
+<main id="top">
+<section class="hero container">
+  <p class="eyebrow"><span></span> Anonymous submission · Supplementary material</p>
+  <h1><span class="title-name">CableTac</span><br>Scalable Visuo-Tactile Learning<br class="desktop"> for Cable Routing</h1>
+  <p class="hero-description">Global cable geometry. Local contact feedback.<br>A scalable simulation-to-learning pipeline for deformable manipulation.</p>
+  <p class="authors">Anonymous Authors</p>
+  <div class="hero-actions"><a class="button primary" href="#environment">Explore the videos <span>↓</span></a><a class="button" href="#learning">View results <span>↓</span></a></div>
+  <div class="hero-media"><video controls muted playsinline loop preload="none" poster="assets/routing-black.jpg" aria-label="Cable-routing simulation with camera and tactile observations"><source src="assets/routing-black.mp4" type="video/mp4">Your browser does not support video.</video><div class="media-caption"><span class="tag">Simulation</span><span>Cable routing with synchronized visual and tactile observations</span></div></div>
+  <div class="highlights"><div><strong>&gt;1,000</strong><span>generated demonstration trajectories</span></div><div><strong>+8.0 <small>pp</small></strong><span>U-clip benefit from tactile feedback</span></div><div><strong>92.0<small>%</small></strong><span>U-clip success after RL post-training</span></div></div>
+</section>
+<section class="section container" id="overview">
+  <div class="section-intro"><p class="eyebrow">The idea</p><h2>When does touch make a difference?</h2><p>Routing a cable demands both global shape control and precise local contact. CableTac makes it possible to study this interaction at scale: generate demonstrations in simulation, learn visuo-tactile policies, and improve them through reinforcement learning.</p></div>
+  <details class="abstract"><summary>Read the abstract <span>+</span></summary><p>Cable routing requires reasoning about both global cable geometry and local contact interactions, yet collecting large-scale visuo-tactile robot data is expensive. We present CableTac, a simulation and learning framework for scalable visuo-tactile cable manipulation. CableTac combines GPU-accelerated cable dynamics, general-purpose tactile simulation, and a full-scale replica of the ManipulationNet cable-routing benchmark. A demonstration-reuse engine expands fewer than 10 human demonstrations into more than 1,000 simulated trajectories, which we use to pretrain diffusion policies before reinforcement-learning post-training. Across three routing tasks, we find that policy performance improves with increasing amounts of generated data, while the value of tactile feedback is task dependent: tactile sensing provides little benefit for unconstrained round-peg routing, but improves success by 4.7 and 8.0 percentage points for Y- and U-clip insertion, where local contact is critical. RL post-training further improves success to 88.7% and 92.0% on Y- and U-clip routing. These results establish CableTac as a scalable testbed for studying when and how tactile feedback benefits linear-deformable-object manipulation.</p></details>
+  <figure class="paper-figure"><a href="assets/overview.jpg" target="_blank" rel="noopener"><img src="assets/overview.jpg" width="4661" height="1929" loading="lazy" alt="CableTac overview: visuo-tactile environment, data engine, policy learning, and an agent-assisted calibration loop."></a><figcaption><b>One connected pipeline.</b> High-fidelity simulation supports demonstration reuse and policy learning. Human-supervised calibration aligns the simulated scene, tactile response, and cable dynamics with real measurements.</figcaption></figure>
+</section>
+<section class="section tinted" id="environment"><div class="container">
+  <div class="section-heading"><span class="section-number">01</span><div><p class="eyebrow">Visuo-tactile environment</p><h2>Deformable cables. Contact-rich tasks.</h2></div></div>
+  <p class="section-lead">Newton VBD cable dynamics meet OmniTac tactile sensing in a full-scale replica of the ManipulationNet cable-management benchmark: Y-clip insertion, U-clip insertion, and routing around a round peg.</p>
+  <div class="tabs" role="group" aria-label="Select simulation scene"><button class="active" aria-pressed="true" data-scene="black">Black board</button><button aria-pressed="false" data-scene="blue">Blue board</button><button aria-pressed="false" data-scene="wood">Wood scene</button></div>
+  <figure class="video-card scene-card"><video id="scene-video" controls muted playsinline loop preload="none" poster="assets/routing-black.jpg" aria-label="Selected cable-routing simulation scene"><source src="assets/routing-black.mp4" type="video/mp4"></video><figcaption id="scene-caption">Black-board simulation · Visual and tactile observations during routing.</figcaption></figure>
+  <div class="three-col feature-row"><article><h3>GPU-accelerated dynamics</h3><p>Resolve cable bending and contact with Newton’s Vertex Block Descent solver.</p></article><article><h3>Controlled variation</h3><p>Vary fixture pose, scene appearance, and cable bending stiffness.</p></article><article><h3>Matched task geometry</h3><p>Use a common geometric reference for simulation and physical calibration.</p></article></div>
+  <figure class="paper-figure"><a href="assets/setup.jpg" target="_blank" rel="noopener"><img src="assets/setup.jpg" loading="lazy" alt="Routing setup, simulated scene variations, and cable configurations under different bending stiffnesses."></a><figcaption>Task geometry, scene variation, and cable bending stiffness. Click any paper figure to inspect it at full resolution.</figcaption></figure>
+  <div class="subsection-heading"><p class="eyebrow">OmniTac</p><h3>Different sensors. A shared physical interaction.</h3><p>Contact geometry, solver-derived normal load, and history-dependent shear are reconstructed separately from the sensor response. The same interaction supports tactile RGB, force maps, contact masks, and marker displacement fields.</p></div>
+  <div class="two-col"><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/sensor-modalities.jpg"><source src="assets/sensor-modalities.mp4" type="video/mp4"></video><figcaption><b>Multiple sensing modalities.</b> Vision-based and non-vision-based tactile outputs.</figcaption></figure><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/curved-sensors.jpg"><source src="assets/curved-sensors.mp4" type="video/mp4"></video><figcaption><b>Beyond flat surfaces.</b> Tactile response on curved sensor geometries.</figcaption></figure></div>
+  <figure class="paper-figure"><a href="assets/touch.jpg" target="_blank" rel="noopener"><img src="assets/touch.jpg" loading="lazy" alt="General tactile sensing and example routing outcomes with and without tactile feedback."></a><figcaption><b>Touch for cable manipulation.</b> General tactile representations provide local contact feedback during grasping and fixture engagement.</figcaption></figure>
+</div></section>
+<section class="section container" id="data">
+  <div class="section-heading"><span class="section-number">02</span><div><p class="eyebrow">Data engine</p><h2>Reuse demonstrations, re-simulate deformation.</h2></div></div>
+  <p class="section-lead">Object-centric replay transfers demonstrated end-effector motions relative to the task fixture. The simulator resolves the cable’s deformation and contact history; cable configurations are not rigidly copied.</p>
+  <div class="pipeline" aria-label="Data generation stages"><div><span>01</span><h3>Human demonstrations</h3><p>Task-relative motion</p></div><span class="flow-arrow">→</span><div><span>02</span><h3>Object-centric replay</h3><p>New fixture configurations</p></div><span class="flow-arrow">→</span><div><span>03</span><h3>Validated trajectories</h3><p>Task success + sensor validity</p></div></div>
+  <div class="two-col"><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/demonstrations.jpg"><source src="assets/demonstrations.mp4" type="video/mp4"></video><figcaption><b>Demonstration collection.</b> Human-guided cable manipulation in simulation.</figcaption></figure><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/replay.jpg"><source src="assets/replay.mp4" type="video/mp4"></video><figcaption><b>Generated rollouts.</b> Synchronized vision, tactile feedback, proprioception, and actions.</figcaption></figure></div>
+  <p class="note">Only successful, sensor-valid trajectories enter imitation training. Failed rollouts remain available for diagnosis.</p>
+</section>
+<section class="section tinted" id="learning"><div class="container">
+  <div class="section-heading"><span class="section-number">03</span><div><p class="eyebrow">Policy learning</p><h2>Pretrain from demonstrations.<br>Refine through interaction.</h2></div></div>
+  <p class="section-lead">DINOv3 visual features and a shared 1D tactile CNN are fused through cross-attention. A diffusion policy learns action chunks from demonstrations; DPPO then improves task return through simulated interaction.</p>
+  <figure class="paper-figure results-figure"><a href="assets/results.jpg" target="_blank" rel="noopener"><img src="assets/results.jpg" loading="lazy" alt="Experimental results: data scaling, comparison of pre-trained policies, and RL post-training success curves."></a><figcaption><b>Scaling data and policy performance.</b> Generated demonstrations improve learning; tactile gains depend on the task; RL post-training further improves clip routing. Pre-training error bars represent 95% Wilson confidence intervals.</figcaption></figure>
+  <div class="three-col result-cards"><article><span class="result-label">Y-clip · Pre-training</span><strong>+4.7 <small>pp</small></strong><p>65.33% with touch<br>60.67% without touch</p></article><article><span class="result-label">U-clip · Pre-training</span><strong>+8.0 <small>pp</small></strong><p>59.33% with touch<br>51.33% without touch</p></article><article><span class="result-label">Round peg · Pre-training</span><strong>≈100<small>%</small></strong><p>99.67% with touch<br>99.33% without touch</p></article></div>
+  <div class="takeaway"><span>Key finding</span><p>Touch helps most when local contact matters—not every routing task benefits equally.</p></div>
+  <div class="posttraining"><div><h3>After RL post-training</h3><p>Evaluated in simulation over 300 trials per task.</p></div><div><strong>88.67<small>%</small></strong><span>Y-clip · 266 / 300</span></div><div><strong>92.00<small>%</small></strong><span>U-clip · 276 / 300</span></div></div>
+  <details class="abstract"><summary>Evaluation context <span>+</span></summary><p>Pre-training compares DP, DP without touch, T-Rex-lite, ContactWorld-lite, and Wan prefix-2. DP variants and Wan use 300 trials per task; T-Rex-lite and ContactWorld-lite use 100. Lightweight baselines are adapted configurations, not reproductions of the complete published systems. Observations and controllers differ, and Wan’s Y-clip evaluation uses different seeds from DP. The comparison therefore characterizes the evaluated configurations rather than establishing a controlled ranking of the original methods. Curves show the post-training trajectory; the reported final evaluation counts above are separate.</p></details>
+</div></section>
+<section class="section container" id="calibration">
+  <div class="section-heading"><span class="section-number">04</span><div><p class="eyebrow">Agent-assisted real-to-sim calibration</p><h2>Measure. Inspect. Update.</h2></div></div>
+  <p class="section-lead">A human-supervised calibration loop aligns scene and camera geometry, tactile appearance, marker response, and cable dynamics. Real recordings constrain simulator updates, which are inspected before acceptance.</p>
+  <div class="three-col"><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/calibration-rgb.jpg"><source src="assets/calibration-rgb.mp4" type="video/mp4"></video><figcaption><b>Tactile RGB</b><br>Compare simulated and measured sensor appearance.</figcaption></figure><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/calibration-markers.jpg"><source src="assets/calibration-markers.mp4" type="video/mp4"></video><figcaption><b>Marker displacement</b><br>Inspect contact-induced deformation and shear response.</figcaption></figure><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/calibration-cable.jpg"><source src="assets/calibration-cable.mp4" type="video/mp4"></video><figcaption><b>Cable dynamics</b><br>Use physical measurements to constrain bending behavior.</figcaption></figure></div>
+  <p class="scope-note"><b>Scope of the evidence.</b> These recordings demonstrate calibration, not end-to-end real-world policy transfer. Policy success rates on this page are simulation results. Real-world transfer and compositional routing remain future work.</p>
+</section>
+<section class="closing"><div class="container"><p class="eyebrow">CableTac</p><h2>A testbed for understanding<br>when tactile feedback is useful.</h2><a class="button primary" href="#top">Back to top ↑</a></div></section>
+</main>
+<footer><div class="container"><span>CableTac · Anonymous supplementary material</span><span>No analytics · No third-party embeds</span></div></footer>
+</body>
+</html>

@@ -1,4 +1,5 @@
 /* Reference-inspired research layout; original implementation, local assets only. */
+.tactile-videos .video-card video{width:100%;height:auto;aspect-ratio:1280 / 694;object-fit:contain;background:#0e1319}
 /* Fit the full camera frame behind the original centered title. */
 .hero .hero-background{inset:0;width:100%;height:100%;object-fit:contain;object-position:center;filter:none}
 :root:root{--blue:#8035b5;--teal:#8035b5}

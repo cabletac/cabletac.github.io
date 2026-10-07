@@ -18,8 +18,15 @@ document.querySelectorAll('[data-scene]').forEach(button => {
 });
 const hero = document.querySelector('#hero-video');
 const toggle = document.querySelector('#hero-toggle');
+let heroVisible = true;
+let userPausedHero = false;
+hero.muted = true;
+const startHero = () => {
+  if (heroVisible && !userPausedHero && !document.hidden) hero.play().catch(() => {});
+};
 toggle.addEventListener('click', () => {
-  if (hero.paused) hero.play().catch(() => {}); else hero.pause();
+  userPausedHero = !hero.paused;
+  if (userPausedHero) hero.pause(); else startHero();
 });
 const syncToggle = () => {
   toggle.textContent = hero.paused ? 'Play background' : 'Pause background';
@@ -29,10 +36,12 @@ hero.addEventListener('play', syncToggle);
 hero.addEventListener('pause', syncToggle);
 new IntersectionObserver(entries => {
   const visible = entries[0].isIntersecting;
+  heroVisible = visible;
   document.querySelector('.sidebar-nav').classList.toggle('visible', !visible);
-  if (!visible) hero.pause();
+  if (!visible) hero.pause(); else startHero();
 }, {threshold:0.15}).observe(document.querySelector('.hero'));
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData) hero.play().catch(() => {});
+hero.addEventListener('canplay', startHero);
+startHero();
 const navLinks = [...document.querySelectorAll('.sidebar-nav a')];
 const updateNavigation = () => {
   let current = '#top';
@@ -56,4 +65,5 @@ document.querySelectorAll('video').forEach(video => {
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) document.querySelectorAll('video').forEach(video => video.pause());
+  else startHero();
 });

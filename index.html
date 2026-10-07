@@ -9,24 +9,23 @@
   <title>CableTac — Scalable Visuo-Tactile Learning for Cable Routing</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="research.css">
   <script src="script.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#overview">Skip to content</a>
-<header class="nav-wrap"><nav aria-label="Main navigation">
-  <a class="brand" href="#top">Cable<span>Tac</span><span class="brand-dot"></span></a>
-  <div class="nav-links"><a href="#environment">Environment</a><a href="#data">Data engine</a><a href="#learning">Results</a><a href="#calibration">Calibration</a></div>
-  <a class="nav-paper" href="#overview">Overview ↓</a>
-</nav></header>
+<nav class="sidebar-nav" aria-label="Sections"><a href="#top">CableTac</a><a href="#overview">Overview</a><a href="#environment">Cable Routing</a><a href="#tactile">Visuo-Tactile Sensing</a><a href="#data">Data Collection</a><a href="#learning">Policy Learning</a><a href="#calibration">Real-to-Sim Calibration</a></nav>
 <main id="top">
-<section class="hero container">
-  <p class="eyebrow"><span></span> Anonymous submission · Supplementary material</p>
+<section class="hero">
+  <video class="hero-background" id="hero-video" muted playsinline loop preload="none" poster="assets/routing-black.jpg" aria-label="Background cable-routing simulation"><source src="assets/routing-black.mp4" type="video/mp4"></video>
+  <div class="hero-overlay"></div>
+  <div class="hero-top"><a href="#environment">Videos</a><a href="#learning">Results</a></div>
+  <div class="hero-content">
   <h1><span class="title-name">CableTac</span><br>Scalable Visuo-Tactile Learning<br class="desktop"> for Cable Routing</h1>
-  <p class="hero-description">Global cable geometry. Local contact feedback.<br>A scalable simulation-to-learning pipeline for deformable manipulation.</p>
-  <p class="authors">Anonymous Authors</p>
-  <div class="hero-actions"><a class="button primary" href="#environment">Explore the videos <span>↓</span></a><a class="button" href="#learning">View results <span>↓</span></a></div>
-  <div class="hero-media"><video controls muted playsinline loop preload="none" poster="assets/routing-black.jpg" aria-label="Cable-routing simulation with camera and tactile observations"><source src="assets/routing-black.mp4" type="video/mp4">Your browser does not support video.</video><div class="media-caption"><span class="tag">Simulation</span><span>Cable routing with synchronized visual and tactile observations</span></div></div>
-  <div class="highlights"><div><strong>&gt;1,000</strong><span>generated demonstration trajectories</span></div><div><strong>+8.0 <small>pp</small></strong><span>U-clip benefit from tactile feedback</span></div><div><strong>92.0<small>%</small></strong><span>U-clip success after RL post-training</span></div></div>
+  <p class="authors">Anonymous Authors</p><p class="submission">Anonymous review · Supplementary material</p>
+  <div class="hero-actions"><a class="button" href="#environment">Explore videos ↓</a><a class="button" href="#overview">Overview ↓</a></div>
+  </div>
+  <div class="hero-bottom"><span>Simulation · Visuo-tactile cable routing</span><button id="hero-toggle" type="button" aria-pressed="false">Play background</button></div>
 </section>
 <section class="section container" id="overview">
   <div class="section-intro"><p class="eyebrow">The idea</p><h2>When does touch make a difference?</h2><p>Routing a cable demands both global shape control and precise local contact. CableTac makes it possible to study this interaction at scale: generate demonstrations in simulation, learn visuo-tactile policies, and improve them through reinforcement learning.</p></div>
@@ -40,7 +39,7 @@
   <figure class="video-card scene-card"><video id="scene-video" controls muted playsinline loop preload="none" poster="assets/routing-black.jpg" aria-label="Selected cable-routing simulation scene"><source src="assets/routing-black.mp4" type="video/mp4"></video><figcaption id="scene-caption">Black-board simulation · Visual and tactile observations during routing.</figcaption></figure>
   <div class="three-col feature-row"><article><h3>GPU-accelerated dynamics</h3><p>Resolve cable bending and contact with Newton’s Vertex Block Descent solver.</p></article><article><h3>Controlled variation</h3><p>Vary fixture pose, scene appearance, and cable bending stiffness.</p></article><article><h3>Matched task geometry</h3><p>Use a common geometric reference for simulation and physical calibration.</p></article></div>
   <figure class="paper-figure"><a href="assets/setup.jpg" target="_blank" rel="noopener"><img src="assets/setup.jpg" loading="lazy" alt="Routing setup, simulated scene variations, and cable configurations under different bending stiffnesses."></a><figcaption>Task geometry, scene variation, and cable bending stiffness. Click any paper figure to inspect it at full resolution.</figcaption></figure>
-  <div class="subsection-heading"><p class="eyebrow">OmniTac</p><h3>Different sensors. A shared physical interaction.</h3><p>Contact geometry, solver-derived normal load, and history-dependent shear are reconstructed separately from the sensor response. The same interaction supports tactile RGB, force maps, contact masks, and marker displacement fields.</p></div>
+  <div class="subsection-heading" id="tactile"><p class="eyebrow">OmniTac</p><h3>Visuo-Tactile Sensing</h3><p>Contact geometry, solver-derived normal load, and history-dependent shear are reconstructed separately from the sensor response. The same interaction supports tactile RGB, force maps, contact masks, and marker displacement fields.</p></div>
   <div class="two-col"><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/sensor-modalities.jpg"><source src="assets/sensor-modalities.mp4" type="video/mp4"></video><figcaption><b>Multiple sensing modalities.</b> Vision-based and non-vision-based tactile outputs.</figcaption></figure><figure class="video-card"><video controls muted playsinline loop preload="none" poster="assets/curved-sensors.jpg"><source src="assets/curved-sensors.mp4" type="video/mp4"></video><figcaption><b>Beyond flat surfaces.</b> Tactile response on curved sensor geometries.</figcaption></figure></div>
   <figure class="paper-figure"><a href="assets/touch.jpg" target="_blank" rel="noopener"><img src="assets/touch.jpg" loading="lazy" alt="General tactile sensing and example routing outcomes with and without tactile feedback."></a><figcaption><b>Touch for cable manipulation.</b> General tactile representations provide local contact feedback during grasping and fixture engagement.</figcaption></figure>
 </div></section>
